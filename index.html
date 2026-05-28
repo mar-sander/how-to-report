@@ -1,0 +1,1077 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>はじめての工業実習レポート作成ガイド</title>
+<meta name="description" content="工業実習の初回レポート作成に向けた、生徒用の読みやすいWebガイドです。">
+<style>
+  :root {
+    --ink: #102c46;
+    --text: #23384d;
+    --muted: #64788c;
+    --line: #cfe1eb;
+    --line-strong: #b4d6df;
+    --accent: #0797a8;
+    --accent-dark: #087f8c;
+    --accent-soft: #e8f8fa;
+    --blue-soft: #f2f8fd;
+    --cream: #fff7e6;
+    --warn: #f2b84b;
+    --weak-bg: #fff5f5;
+    --weak-line: #efcaca;
+    --weak: #a33a3a;
+    --strong-bg: #ecfbf8;
+    --strong-line: #bde9df;
+    --shadow: 0 14px 36px rgba(16, 44, 70, .08);
+    --radius-lg: 28px;
+    --radius-md: 20px;
+    --radius-sm: 14px;
+    --max: 1040px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Noto Sans JP", "Noto Sans CJK JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", system-ui, sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(circle at 100% 0%, rgba(7, 151, 168, .14), transparent 360px),
+      radial-gradient(circle at 0% 100%, rgba(48, 94, 145, .10), transparent 420px),
+      linear-gradient(180deg, #f7fbff 0%, #ffffff 42%, #f8fbfd 100%);
+    line-height: 1.75;
+  }
+
+  a { color: inherit; }
+
+  .skip-link {
+    position: fixed;
+    left: 12px;
+    top: 12px;
+    z-index: 100;
+    transform: translateY(-150%);
+    padding: .6rem .9rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: white;
+    text-decoration: none;
+    font-weight: 800;
+  }
+  .skip-link:focus { transform: translateY(0); }
+
+  .site-header {
+    position: relative;
+    padding: clamp(22px, 5vw, 54px) max(18px, env(safe-area-inset-left)) 18px max(18px, env(safe-area-inset-right));
+  }
+
+  .hero,
+  main,
+  .site-footer-inner {
+    width: min(var(--max), calc(100% - 36px));
+    margin-inline: auto;
+  }
+
+  .hero {
+    display: grid;
+    gap: 22px;
+  }
+
+  .kicker {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: .45rem;
+    padding: .38rem .76rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink);
+    background: rgba(232, 248, 250, .86);
+    font-size: .78rem;
+    font-weight: 900;
+    letter-spacing: .08em;
+  }
+
+  .hero h1 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(2.55rem, 12vw, 5.25rem);
+    line-height: 1.04;
+    letter-spacing: -.06em;
+    font-weight: 900;
+  }
+
+  .hero h1 .accent { color: var(--accent); }
+
+  .lead {
+    margin: 0;
+    max-width: 42em;
+    color: var(--ink);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 650;
+  }
+
+  .hero-message {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+    padding: clamp(20px, 5vw, 38px);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    background: rgba(255,255,255,.82);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-message .label,
+  .section-label {
+    color: var(--accent-dark);
+    font-size: .78rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+  }
+
+  .hero-message .phrase {
+    color: var(--ink);
+    font-size: clamp(1.9rem, 8vw, 3.4rem);
+    line-height: 1.28;
+    font-weight: 900;
+    letter-spacing: -.04em;
+  }
+
+  .hero-message p { margin: 0; }
+
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    margin-top: 18px;
+    padding: 10px max(18px, env(safe-area-inset-left)) 10px max(18px, env(safe-area-inset-right));
+    border-block: 1px solid rgba(207,225,235,.78);
+    background: rgba(248,251,255,.86);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .page-nav {
+    display: flex;
+    width: min(var(--max), 100%);
+    margin: 0 auto;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: thin;
+  }
+
+  .page-nav a {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: .55rem .84rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: white;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .page-nav a:focus-visible,
+  .page-nav a:hover {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  main {
+    display: grid;
+    gap: clamp(22px, 4vw, 38px);
+    padding: 18px 0 clamp(42px, 8vw, 80px);
+  }
+
+  .chapter {
+    scroll-margin-top: 86px;
+    padding: clamp(22px, 5vw, 44px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: rgba(255,255,255,.88);
+    box-shadow: var(--shadow);
+  }
+
+  .chapter-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    margin-bottom: clamp(18px, 4vw, 28px);
+  }
+
+  .chapter-title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .chapter-number {
+    flex: 0 0 auto;
+    color: #7a91a4;
+    font-size: .8rem;
+    font-weight: 900;
+    letter-spacing: .12em;
+  }
+
+  h2, h3, p { margin: 0; }
+
+  h2 {
+    color: var(--ink);
+    font-size: clamp(1.85rem, 6.6vw, 3.2rem);
+    line-height: 1.16;
+    letter-spacing: -.05em;
+    font-weight: 900;
+  }
+
+  h3 {
+    color: var(--ink);
+    font-size: clamp(1.12rem, 3.2vw, 1.42rem);
+    line-height: 1.36;
+    font-weight: 900;
+  }
+
+  .desc {
+    color: #4f6173;
+    font-size: clamp(.96rem, 2.5vw, 1.06rem);
+    font-weight: 520;
+  }
+
+  .tagline {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: .46rem .78rem;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    font-size: .92rem;
+    font-weight: 900;
+  }
+
+  .cards,
+  .rules-grid,
+  .examples,
+  .two-col,
+  .questions {
+    display: grid;
+    gap: 14px;
+  }
+
+  .cards { grid-template-columns: 1fr; }
+
+  .card,
+  .rule,
+  .question,
+  .example,
+  .mini-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: #ffffff;
+  }
+
+  .card,
+  .rule,
+  .question,
+  .example {
+    padding: clamp(16px, 4vw, 22px);
+  }
+
+  .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin-bottom: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 900;
+  }
+
+  .card p,
+  .rule p,
+  .question span,
+  .example p,
+  .mini-card span,
+  li {
+    font-size: clamp(.93rem, 2.5vw, 1rem);
+  }
+
+  .card h3,
+  .rule h3 { margin-bottom: 8px; }
+
+  .note,
+  .closing {
+    margin-top: 16px;
+    padding: 16px 18px;
+    border-radius: var(--radius-md);
+    font-size: clamp(.94rem, 2.6vw, 1rem);
+  }
+
+  .note {
+    border-left: 6px solid var(--warn);
+    background: var(--cream);
+  }
+
+  .closing {
+    border: 1px solid var(--line-strong);
+    background: var(--accent-soft);
+    color: var(--ink);
+    font-weight: 750;
+  }
+
+  .steps {
+    display: grid;
+    gap: 12px;
+    counter-reset: step;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 12px 14px;
+    align-items: start;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: #fff;
+  }
+
+  .step .num { margin: 0; }
+
+  .step-main {
+    display: grid;
+    gap: 4px;
+  }
+
+  .step-title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+  }
+
+  .step .title {
+    color: var(--ink);
+    font-size: 1.16rem;
+    font-weight: 900;
+  }
+
+  .step .tense {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: .25rem .58rem;
+    border-radius: 999px;
+    background: #edf6ff;
+    color: #275b86;
+    font-size: .78rem;
+    font-weight: 900;
+  }
+
+  .step .desc { font-size: .96rem; }
+
+  .mini-rule {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .mini-card {
+    padding: 16px;
+  }
+
+  .mini-card b {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 900;
+  }
+
+  .mini-card:nth-child(1) { background: #f7fbff; border-color: #c7dff0; }
+  .mini-card:nth-child(2) { background: #f4fbfa; border-color: #bfe8df; }
+  .mini-card:nth-child(3) { background: #fffaf0; border-color: #edd9ad; }
+
+  .quote {
+    padding: clamp(18px, 4.5vw, 28px);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: #f6fbfd;
+    color: var(--ink);
+    font-size: clamp(1.55rem, 5.6vw, 2.45rem);
+    line-height: 1.28;
+    font-weight: 900;
+    letter-spacing: -.04em;
+  }
+
+  .quote small {
+    display: block;
+    margin-top: 12px;
+    color: #43586b;
+    font-size: clamp(.94rem, 2.5vw, 1rem);
+    line-height: 1.75;
+    font-weight: 560;
+    letter-spacing: 0;
+  }
+
+  .questions {
+    grid-template-columns: 1fr;
+    margin-top: 14px;
+  }
+
+  .question b {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--accent-dark);
+    font-size: 1.04rem;
+    font-weight: 900;
+  }
+
+  .examples {
+    margin-top: 16px;
+    grid-template-columns: 1fr;
+  }
+
+  .example.weak { background: var(--weak-bg); border-color: var(--weak-line); }
+  .example.strong { background: var(--strong-bg); border-color: var(--strong-line); }
+
+  .example .label {
+    margin-bottom: 8px;
+    font-weight: 900;
+  }
+
+  .example.weak .label { color: var(--weak); }
+  .example.strong .label { color: var(--accent-dark); }
+
+  .rules-grid { grid-template-columns: 1fr; }
+
+  .rule h3 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: 0 0 auto;
+  }
+
+  .two-col { grid-template-columns: 1fr; margin-top: 14px; }
+
+  .small-list {
+    margin: 8px 0 0;
+    padding-left: 1.25em;
+  }
+
+  .small-list li + li { margin-top: 4px; }
+
+  .check-area {
+    margin-top: 16px;
+    padding: clamp(17px, 4vw, 24px);
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: #f6fbfd;
+  }
+
+  .check-title {
+    margin-bottom: 12px;
+    color: var(--ink);
+    font-size: clamp(1.24rem, 4vw, 1.55rem);
+    font-weight: 900;
+  }
+
+  .check-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .check-list li {
+    position: relative;
+    min-height: 28px;
+    padding-left: 36px;
+  }
+
+  .check-list li::before {
+    content: "";
+    position: absolute;
+    top: .25em;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #5a7a8f;
+    border-radius: 5px;
+    background: white;
+  }
+
+
+
+  .detail-intro {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .detail-summary {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr;
+    margin: 16px 0 18px;
+  }
+
+  .detail-card {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: #fff;
+  }
+
+  .detail-card b {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--ink);
+    font-size: 1.02rem;
+    font-weight: 900;
+  }
+
+  .detail-card span {
+    display: block;
+    font-size: clamp(.93rem, 2.5vw, 1rem);
+  }
+
+  .detail-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .detail-block {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: #fff;
+    overflow: clip;
+  }
+
+  .detail-block summary {
+    cursor: pointer;
+    padding: 16px 18px;
+    color: var(--ink);
+    background: #f6fbfd;
+    font-weight: 900;
+    list-style: none;
+  }
+
+  .detail-block summary::-webkit-details-marker { display: none; }
+
+  .detail-block summary::after {
+    content: "＋";
+    float: right;
+    color: var(--accent-dark);
+    font-weight: 900;
+  }
+
+  .detail-block[open] summary::after { content: "－"; }
+
+  .detail-body {
+    padding: 16px 18px 18px;
+  }
+
+  .detail-body ul,
+  .detail-body ol {
+    margin: 0;
+    padding-left: 1.25em;
+  }
+
+  .detail-body li + li { margin-top: 6px; }
+
+  .detail-body p + ul,
+  .detail-body p + ol { margin-top: 8px; }
+
+  .detail-note {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-left: 5px solid var(--accent);
+    border-radius: 14px;
+    background: var(--accent-soft);
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .example-sentence {
+    margin-top: 10px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #fffaf0;
+    border: 1px solid #edd9ad;
+    font-size: clamp(.93rem, 2.5vw, 1rem);
+  }
+
+  .caption-table {
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .caption-rule {
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  .caption-rule b {
+    color: var(--accent-dark);
+  }
+
+  @media (min-width: 680px) {
+    .detail-summary { grid-template-columns: repeat(3, 1fr); }
+    .caption-table { grid-template-columns: 1fr 1fr; }
+  }
+
+  .site-footer {
+    padding: 28px 18px 38px;
+    color: #6a7b8d;
+  }
+
+  .site-footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    font-size: .82rem;
+  }
+
+  .back-to-top {
+    color: var(--ink);
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  @media (min-width: 680px) {
+    .hero-message { grid-template-columns: 1.05fr .95fr; align-items: center; }
+    .cards { grid-template-columns: repeat(3, 1fr); }
+    .mini-rule { grid-template-columns: repeat(3, 1fr); }
+    .questions { grid-template-columns: repeat(4, 1fr); }
+    .examples { grid-template-columns: 1fr 1fr; }
+    .rules-grid { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr 1fr; }
+    .check-list { grid-template-columns: 1fr 1fr; }
+    .chapter-head { grid-template-columns: 1fr auto; align-items: start; }
+  }
+
+  @media (min-width: 900px) {
+    .step {
+      grid-template-columns: 46px 138px minmax(0, 1fr) auto;
+      align-items: center;
+    }
+    .step-main {
+      display: contents;
+    }
+    .step-title-row {
+      display: contents;
+    }
+    .step .title { grid-column: 2; }
+    .step .desc { grid-column: 3; }
+    .step .tense { grid-column: 4; justify-self: end; }
+  }
+
+  @media (max-width: 420px) {
+    .hero, main, .site-footer-inner { width: min(100% - 24px, var(--max)); }
+    .site-header { padding-inline: 12px; }
+    .nav-wrap { padding-inline: 12px; }
+    .chapter { padding: 18px; border-radius: 22px; }
+    .hero-message { border-radius: 22px; }
+    .page-nav a { font-size: .84rem; }
+    .chapter-title-row { gap: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  @media print {
+    @page { size: A4 portrait; margin: 12mm; }
+    body { background: white; }
+    .nav-wrap, .skip-link, .back-to-top { display: none !important; }
+    .site-header { padding: 0 0 10mm; }
+    .hero, main, .site-footer-inner { width: 100%; }
+    main { gap: 10mm; padding: 0; }
+    .chapter {
+      break-inside: avoid;
+      box-shadow: none;
+      background: white;
+      padding: 8mm;
+      border-color: #cfe1eb;
+    }
+    .detail-block { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="site-header" id="top">
+  <div class="hero">
+    <div class="kicker">手書き・ワープロ共通 / 初回レポート向け</div>
+    <h1>はじめての<br><span class="accent">工業実習レポート</span><br>作成ガイド</h1>
+    <p class="lead">レポートは、実習で「やったこと」を、読み手に伝わる「分かったこと」に変えるための報告書である。</p>
+    <section class="hero-message" aria-labelledby="goal-heading">
+      <div>
+        <div class="label">THIS IS THE GOAL</div>
+        <div class="phrase" id="goal-heading">やったことを、<br>分かったこととして、<br>読み手に渡す。</div>
+      </div>
+      <p>実習は作業だけで終わりではない。何を行い、何が分かり、なぜそう言えるのかを整理して報告するところまで含めて完了する。</p>
+    </section>
+  </div>
+</header>
+
+<nav class="nav-wrap" aria-label="ページ内メニュー">
+  <div class="page-nav">
+    <a href="#meaning">01 意味</a>
+    <a href="#structure">02 型</a>
+    <a href="#thinking">03 考察</a>
+    <a href="#check">04 仕上げ</a>
+    <a href="#detail">詳細版</a>
+  </div>
+</nav>
+
+<main id="main">
+  <section class="chapter" id="meaning" aria-labelledby="meaning-title">
+    <div class="chapter-head">
+      <div>
+        <div class="section-label">REPORT GUIDE FOR FIRST PRACTICE</div>
+        <div class="chapter-title-row">
+          <h2 id="meaning-title">レポートを書く意味</h2>
+          <span class="chapter-number">01 / 04</span>
+        </div>
+        <p class="desc">読みやすさは、読む人への思いやりであり、自分の努力を正しく伝えるための技術でもある。</p>
+      </div>
+    </div>
+
+    <div class="cards">
+      <article class="card">
+        <div class="num">1</div>
+        <h3>完了を証明する</h3>
+        <p>「この実習を行い、このように理解した」と示すための記録である。</p>
+      </article>
+      <article class="card">
+        <div class="num">2</div>
+        <h3>学びを整理する</h3>
+        <p>測定値、図、表、考えを並べ、自分の理解を形にする。</p>
+      </article>
+      <article class="card">
+        <div class="num">3</div>
+        <h3>努力を伝える</h3>
+        <p>読みやすいレポートは、頑張りを正しく評価してもらいやすい。</p>
+      </article>
+    </div>
+    <div class="note"><b>大原則：</b>レポートは自分以外の誰かが読む。読みやすさは、読む人への思いやりであり、自分の努力を正しく伝えるための技術でもある。</div>
+  </section>
+
+  <section class="chapter" id="structure" aria-labelledby="structure-title">
+    <div class="chapter-head">
+      <div>
+        <div class="section-label">BASIC STRUCTURE</div>
+        <div class="chapter-title-row">
+          <h2 id="structure-title">まずはこの「型」で書けばよい</h2>
+          <span class="chapter-number">02 / 04</span>
+        </div>
+        <p class="desc">初回は個性的に書こうとしなくてよい。決まった順番に、必要な情報を置いていく。</p>
+      </div>
+      <div class="tagline">迷ったら、型に戻る。</div>
+    </div>
+
+    <div class="steps">
+      <article class="step">
+        <div class="num">1</div>
+        <div class="step-main"><div class="step-title-row"><div class="title">目的</div><div class="tense">過去形にしない</div></div><p class="desc">この実習で何を学ぶのか、何を確認するのかを書く。結論と対応する。</p></div>
+      </article>
+      <article class="step">
+        <div class="num">2</div>
+        <div class="step-main"><div class="step-title-row"><div class="title">理論</div><div class="tense">基本は現在形</div></div><p class="desc">実習を理解するために必要な知識を書く。丸写しではなく、自分の言葉でまとめる。</p></div>
+      </article>
+      <article class="step">
+        <div class="num">3</div>
+        <div class="step-main"><div class="step-title-row"><div class="title">実験方法</div><div class="tense">過去形</div></div><p class="desc">実際に行った手順を書く。誰が読んでも流れが追えるようにする。</p></div>
+      </article>
+      <article class="step">
+        <div class="num">4</div>
+        <div class="step-main"><div class="step-title-row"><div class="title">実験結果</div><div class="tense">事実を示す</div></div><p class="desc">測定値、表、図、グラフを整理する。結果そのものと説明を分けて考える。</p></div>
+      </article>
+      <article class="step">
+        <div class="num">5</div>
+        <div class="step-main"><div class="step-title-row"><div class="title">考察</div><div class="tense">事実＋考え</div></div><p class="desc">結果をもとに、なぜそうなったのかを考える。感想ではなく推理を書く。</p></div>
+      </article>
+      <article class="step">
+        <div class="num">6</div>
+        <div class="step-main"><div class="step-title-row"><div class="title">結論</div><div class="tense">簡潔に</div></div><p class="desc">目的に対する答えを短くまとめる。何が分かり、何が言えるのかを書く。</p></div>
+      </article>
+      <article class="step">
+        <div class="num">7</div>
+        <div class="step-main"><div class="step-title-row"><div class="title">反省・感想</div><div class="tense">箇条書きNG</div></div><p class="desc">うまくいった点、改善したい点、次回に生かしたいことを文章で書く。</p></div>
+      </article>
+    </div>
+
+    <div class="mini-rule">
+      <div class="mini-card"><b>目的 ⇔ 結論</b><span>目的で立てた問いに、結論で答える。</span></div>
+      <div class="mini-card"><b>結果 ≠ 考察</b><span>結果は事実。考察は事実から考えたこと。</span></div>
+      <div class="mini-card"><b>感想は最後</b><span>反省・感想は大切だが、考察の代わりにはしない。</span></div>
+    </div>
+  </section>
+
+  <section class="chapter" id="thinking" aria-labelledby="thinking-title">
+    <div class="chapter-head">
+      <div>
+        <div class="section-label">HOW TO THINK</div>
+        <div class="chapter-title-row">
+          <h2 id="thinking-title">考察は「感想」ではなく「推理」である</h2>
+          <span class="chapter-number">03 / 04</span>
+        </div>
+        <p class="desc">考察で大切なのは、結果を見て「なぜそうなったのか」「そこから何が言えるのか」を説明することである。</p>
+      </div>
+      <div class="tagline">ここが一番レポートらしい。</div>
+    </div>
+
+    <div class="quote">結果を見て、理由を考え、説明する。<small>考察は、実験結果に対して自分の頭で行う「技術者らしい推理」である。</small></div>
+
+    <div class="questions" aria-label="考察で使える問い">
+      <article class="question"><b>なぜ？</b><span>なぜその値になったのか。理論や条件とつなげて考える。</span></article>
+      <article class="question"><b>どれくらい？</b><span>誤差や差はどの程度か。許容できる範囲かを考える。</span></article>
+      <article class="question"><b>図表から？</b><span>表やグラフの形、増減、傾向から何が分かるかを見る。</span></article>
+      <article class="question"><b>だから何？</b><span>その結果から、実習の目的に対して何が言えるかをまとめる。</span></article>
+    </div>
+
+    <div class="examples">
+      <article class="example weak">
+        <div class="label">まだ考察として弱い例</div>
+        <p>抵抗を大きくしたら電流が小さくなった。少し難しかったが、グラフを作ることができた。</p>
+      </article>
+      <article class="example strong">
+        <div class="label">考察らしい例</div>
+        <p>図1より、抵抗が大きくなるほど電流は小さくなることが分かる。電圧が一定の場合、I=V/Rとなるため、抵抗と電流は反比例の関係にあると考えられる。</p>
+      </article>
+      <article class="example weak">
+        <div class="label">まだ考察として弱い例</div>
+        <p>測定値が少しずれた。次はもっと正確に測りたい。</p>
+      </article>
+      <article class="example strong">
+        <div class="label">考察らしい例</div>
+        <p>測定値にずれが生じた理由として、測定器の読み取り、配線の接触、抵抗値のばらつきが考えられる。次回は接続を確認し、複数回測定して平均を取ることで誤差を小さくしたい。</p>
+      </article>
+    </div>
+
+    <div class="note"><b>コツ：</b>「図1より」「表2を見ると」「この結果から」という書き出しを使うと、結果と考察をつなげやすい。</div>
+  </section>
+
+  <section class="chapter" id="check" aria-labelledby="check-title">
+    <div class="chapter-head">
+      <div>
+        <div class="section-label">FINAL CHECK</div>
+        <div class="chapter-title-row">
+          <h2 id="check-title">読みやすく仕上げるルール</h2>
+          <span class="chapter-number">04 / 04</span>
+        </div>
+        <p class="desc">内容が良くても、読みにくいと伝わりにくい。最後に「読む人への思いやり」を形にする。</p>
+      </div>
+      <div class="tagline">提出前の最終確認。</div>
+    </div>
+
+    <div class="rules-grid">
+      <article class="rule"><h3><span class="dot"></span>文章</h3><p>全文を「だ・である」調で統一する。話し言葉や「すごい」「やばい」「めっちゃ」などは使わない。</p></article>
+      <article class="rule"><h3><span class="dot"></span>レイアウト</h3><p>見出し、余白、インデントを整える。項目が変わるところでは、1〜2行程度の余白を入れる。</p></article>
+      <article class="rule"><h3><span class="dot"></span>図と表</h3><p>図・写真・グラフは「図」、表は「表」として扱う。表のタイトルは上、図のタイトルは下に書く。</p></article>
+      <article class="rule"><h3><span class="dot"></span>数値</h3><p>有効数字を意識する。表では小数点の位置をそろえるなど、見やすくなる工夫をする。</p></article>
+    </div>
+
+    <div class="two-col">
+      <article class="card">
+        <h3>図表を説明するときの書き方</h3>
+        <ul class="small-list">
+          <li>図1より、〇〇が分かる。</li>
+          <li>表2を見ると、△△は□□である。</li>
+          <li>この結果から、□□だと考えられる。</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h3>提出前に思い出すこと</h3>
+        <p>担当の先生から指定された形式がある場合は、それを最優先する。指定がない部分は、この資料を基本に整える。</p>
+      </article>
+    </div>
+
+    <section class="check-area" aria-labelledby="submit-check-title">
+      <div class="check-title" id="submit-check-title">提出前チェックリスト</div>
+      <ul class="check-list">
+        <li>「だ・である」調で統一した</li>
+        <li>話し言葉を使っていない</li>
+        <li>目的と結論が対応している</li>
+        <li>実験方法は過去形で書いた</li>
+        <li>考察が感想だけになっていない</li>
+        <li>図は下、表は上にタイトルを書いた</li>
+        <li>図や表を本文中で説明した</li>
+        <li>余白とインデントを整えた</li>
+        <li>数値や単位を確認した</li>
+        <li>誤字・脱字を確認した</li>
+      </ul>
+    </section>
+
+    <div class="closing">最初から完璧でなくてよい。まずは「何をしたのか」「何が分かったのか」「なぜそう言えるのか」を、読む人に伝わるように丁寧に整理していく。</div>
+  </section>
+
+  <section class="chapter" id="detail" aria-labelledby="detail-title">
+    <div class="chapter-head">
+      <div>
+        <div class="section-label">DETAILED VERSION</div>
+        <div class="chapter-title-row">
+          <h2 id="detail-title">詳細版：もっと正確に仕上げるために</h2>
+          <span class="chapter-number">APPENDIX</span>
+        </div>
+        <p class="desc">ここから先は、保存版PDFの内容をWebで読みやすく整理した詳細版である。初回は上の4項目を押さえ、必要になったらこの詳細版で確認する。</p>
+      </div>
+      <div class="tagline">迷ったときの辞書。</div>
+    </div>
+
+    <div class="detail-intro">
+      <div class="closing">大事なのは、レポートを「作業のあとに出す紙」ではなく、「実習で分かったことを、読む人へ正しく渡すための報告書」として扱うことである。</div>
+      <div class="detail-summary">
+        <div class="detail-card"><b>証明する</b><span>「実習を完了し、こう理解した」と示す。</span></div>
+        <div class="detail-card"><b>整理する</b><span>目的・方法・結果・考察・結論を順番に並べる。</span></div>
+        <div class="detail-card"><b>伝える</b><span>読みやすさを整え、自分の頑張りを正しく届ける。</span></div>
+      </div>
+    </div>
+
+    <div class="detail-list">
+      <details class="detail-block" open>
+        <summary>1. レポートが必要な理由</summary>
+        <div class="detail-body">
+          <ul>
+            <li>レポートの提出と受領によって、「私はこの実習を完了し、実習からこういうことが分かりました」と証明する。</li>
+            <li>つまり、実習は「やっただけ」では終わらない。理解し、報告するところまで含めて完了する。</li>
+            <li>読みやすいレポートは、自分の努力や理解を正当に評価してもらいやすくする。</li>
+          </ul>
+          <div class="detail-note">読む人への思いやりを形にすることが、読みやすいレポートにつながる。</div>
+        </div>
+      </details>
+
+      <details class="detail-block">
+        <summary>2. 共通事項：文章と見た目の基本</summary>
+        <div class="detail-body">
+          <ul>
+            <li>全文を必ず「だ・である」調で統一する。「です・ます」調は使わない。</li>
+            <li>話し言葉は使わない。体言止めなど、文章の装飾も基本的には避ける。</li>
+            <li>一文は長くしすぎない。読み手が途中で迷わない長さにする。</li>
+            <li>項目に合わせてインデントを整える。項目が変わるところでは、1〜2行程度の余白を入れる。</li>
+            <li>手書きの場合、本文は黒ボールペンで書く。修正時は修正液・修正テープを使う。</li>
+            <li>鉛筆やシャーペンで下書きした場合は、清書後に下書きの跡を消す。</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="detail-block">
+        <summary>3. 目的・理論・実験方法の書き方</summary>
+        <div class="detail-body">
+          <ul>
+            <li><b>目的：</b>過去形で書かない。なるべく簡潔に書く。完成時には、目的と結論が対応している必要がある。</li>
+            <li><b>理論：</b>基本的に過去形で書かない。実習に必要な予備知識を、自分の言葉でまとめる。資料の丸写しではなく、尋ねられたときに説明できる理解を目指す。</li>
+            <li><b>実験方法：</b>実際に行った手順なので、過去形で書く。誰が読んでも流れを追えるようにする。</li>
+          </ul>
+          <div class="example-sentence"><b>考え方：</b>目的は「これから何を確かめるか」、実験方法は「実際に何をしたか」、理論は「その実習を理解するために必要な知識」である。</div>
+        </div>
+      </details>
+
+      <details class="detail-block">
+        <summary>4. 考察：結果に対する推理を書く</summary>
+        <div class="detail-body">
+          <p>考察とは、実験結果をもとにした「推理」を述べる場である。感想だけで終わらせず、事実を見て理由や意味を考える。</p>
+          <ul>
+            <li>なぜその値になったのか。</li>
+            <li>その理由として何が考えられるのか。</li>
+            <li>なぜ誤差が発生したのか。</li>
+            <li>発生した誤差はどれくらいか。その誤差は許容できるものか。</li>
+            <li>グラフはどのような形になったか。理論や条件と照らし合わせると何が言えるか。</li>
+            <li>実験結果から分かった事実を述べ、その結果に対する推理や評価を行う。</li>
+          </ul>
+          <div class="detail-note">考察では、「実験結果から分かった点」「気になる点」をできるだけ取り扱う。</div>
+        </div>
+      </details>
+
+      <details class="detail-block">
+        <summary>5. 結論・反省感想の書き方</summary>
+        <div class="detail-body">
+          <ul>
+            <li><b>結論：</b>事実については過去形、判明したことは現在形で簡潔に述べる。例：「〜が分かった。」「〜と言える。」</li>
+            <li><b>結論：</b>目的に対する答えになっている必要がある。何が分かったのか、そこからどんなことが言えるのかを書く。</li>
+            <li><b>反省・感想：</b>行った事実についてのみ過去形で書く。箇条書きではなく、必ず文章で書く。</li>
+          </ul>
+          <div class="example-sentence"><b>目安：</b>目的で立てた問いに対して、結論で短く答える。反省・感想は最後に、次へつなげる文章として書く。</div>
+        </div>
+      </details>
+
+      <details class="detail-block">
+        <summary>6. 図・表・グラフの扱い</summary>
+        <div class="detail-body">
+          <ul>
+            <li>図、画像、写真、グラフはすべて「図」として扱う。表は「表」として扱う。</li>
+            <li>図と表は、紙面の中央に描く・配置する。横幅いっぱいに使わず、左右に余白を残す。</li>
+            <li>図や表は、本文中で参照しながら説明する。</li>
+          </ul>
+          <div class="caption-table">
+            <div class="caption-rule"><b>図のタイトル</b><br>図の真下中央に「図1．○○」と書く。番号は通し番号にする。</div>
+            <div class="caption-rule"><b>表のタイトル</b><br>表の真上中央に「表1．○○」と書く。番号は通し番号にする。</div>
+          </div>
+          <div class="example-sentence"><b>本文中の書き方例：</b><br>「図1より、○○が△△であることが分かる。すなわち……」<br>「表2を見ると、誤差率はxx%以内に収まっていることが分かる。」</div>
+        </div>
+      </details>
+
+      <details class="detail-block">
+        <summary>7. 数値の扱いとレイアウトの考え方</summary>
+        <div class="detail-body">
+          <ul>
+            <li>数値は、原則として有効数字を意識して記載する。</li>
+            <li>表の中では、列ごとに小数点の位置をそろえるなど、見やすくなる工夫をする。</li>
+            <li>大見出し、中見出し、小見出しの大きさを変え、項目のまとまりが分かるようにする。</li>
+            <li>項番は「1.」「(1)」「①」のように、階層が分かるように使う。</li>
+            <li>インデントと余白を使い、どこからどこまでが同じ内容のまとまりか分かるようにする。</li>
+          </ul>
+          <div class="detail-note">読みやすいレイアウトは、内容を飾るためではなく、読み手が迷わず理解するために整える。</div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <span>READABLE REPORT IS CONSIDERATION IN FORM</span>
+    <a class="back-to-top" href="#top">ページ上部へ戻る</a>
+  </div>
+</footer>
+</body>
+</html>
