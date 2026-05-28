@@ -648,6 +648,52 @@
     color: var(--accent-dark);
   }
 
+
+  .layout-sample {
+    margin-top: 16px;
+    padding: clamp(16px, 4vw, 22px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: #ffffff;
+  }
+
+  .layout-sample h3 {
+    margin-bottom: 8px;
+  }
+
+  .layout-sample p {
+    margin-bottom: 12px;
+    color: #4f6173;
+    font-size: clamp(.93rem, 2.5vw, 1rem);
+  }
+
+  .sample-image-link {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: #f6fbfd;
+    text-decoration: none;
+  }
+
+  .sample-image-link:focus-visible {
+    outline: 3px solid rgba(7, 151, 168, .38);
+    outline-offset: 4px;
+  }
+
+  .sample-image-link img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .sample-caption {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: .88rem;
+    line-height: 1.6;
+  }
+
   @media (min-width: 680px) {
     .detail-summary { grid-template-columns: repeat(3, 1fr); }
     .caption-table { grid-template-columns: 1fr 1fr; }
@@ -1046,6 +1092,15 @@
             <div class="caption-rule"><b>表のタイトル</b><br>表の真上中央に「表1．○○」と書く。番号は通し番号にする。</div>
           </div>
           <div class="example-sentence"><b>本文中の書き方例：</b><br>「図1より、○○が△△であることが分かる。すなわち……」<br>「表2を見ると、誤差率はxx%以内に収まっていることが分かる。」</div>
+          <section class="layout-sample" aria-labelledby="layout-sample-title">
+            <h3 id="layout-sample-title">レポートのレイアウト例</h3>
+            <p>図・表・見出し・余白・インデントの置き方を、全体の見本として確認できる。画像をタップすると、元画像を開く。</p>
+            <a class="sample-image-link" href="https://raw.githubusercontent.com/mar-sander/how-to-report/refs/heads/main/reportsample.png" target="_blank" rel="noopener noreferrer">
+              <img src="https://raw.githubusercontent.com/mar-sander/how-to-report/refs/heads/main/reportsample.png" alt="レポートのレイアウト例。目的、実験結果、表、グラフ、反省・感想の配置、見出しの大きさ、余白、インデント、図表タイトルの位置を示した見本画像。" loading="lazy" decoding="async">
+            </a>
+            <p class="sample-caption">レイアウト例：表のタイトルは上、図のタイトルは下に置く。見出し・余白・インデントを使い、読み手が迷わない配置に整える。</p>
+          </section>
+
         </div>
       </details>
 
